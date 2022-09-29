@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block content%}
+<h1 class="text-center">삽입페이지</h1>
+
+<form action="{% url 'todo:created' %}">
+  <label for="content" class="form-label">content</label>
+  <input type="text" id="content" class="form-control mb-3" name="content">
+  <label for="priority" class="form-label">priority</label>
+  <!-- <input type="number" id="priority" class="form-control mb-3" name="priority"> -->
+  <select class="form-select mb-3" id="priority" name="priority">
+    <option selected">Choose...</option>
+    <option value="1">1</option>
+    <option value="2">2</option>
+    <option value="3">3</option>
+    <option value="4">4</option>
+    <option value="5">5</option>
+  </select>
+  <label for="deadline" class="form-label">deadline</label>
+  <input type="date" class="form-control mb-3" id="deadline" name="deadline">
+  <label for="is_complete" class="form-check-label">is_complete</label>
+  <input type="checkbox" id="is_complete" name="is_complete" class="form-check-input">
+
+  <br>
+  <br>
+
+  <button type="submit" class="btn btn-primary">submit</button>
+</form>
+
+{% endblock %}

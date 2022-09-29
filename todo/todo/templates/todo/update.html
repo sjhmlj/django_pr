@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block content%}
+<h1 class="text-center">수정페이지</h1>
+<div class="my-3 p-3 rounded" style="border:solid 1px black">
+
+  <div>pk : {{pk}} </div>
+  <div>content: {{item.content}}
+  </div>
+  <div>priority: {{item.priority}}</div>
+  <div>deadline: {{item.deadline}} </div>
+  <div>check: {{item.completed}} </div>
+
+
+</div>
+
+<form action="/todo/updated/{{ pk }}" class="p-relative">
+  <label for="content" class="form-label">content</label>
+  <input type="text" id="content" class="form-control mb-3" name="content" value="{{ item.content }}">
+  <label for="priority" class="form-label">priority</label>
+  <!-- <input type=" number" id="priority" class="form-control mb-3" name="priority"> -->
+  <select class="form-select mb-3" id="priority" name="priority">
+    <option selected>{{item.priority}}</option>
+    <option value="1">1</option>
+    <option value="2">2</option>
+    <option value="3">3</option>
+    <option value="4">4</option>
+    <option value="5">5</option>
+  </select>
+  <!-- deadline 기존 값을 뜨게끔 해봐 -->
+  <label for="deadline" class="form-label">deadline</label>
+  <input type="date" class="form-control mb-3" id="deadline" name="deadline" value="{{ deadline }}">
+  <label for="is_complete" class="form-check-label">is_complete</label>
+  <input type="checkbox" id="is_complete" name="is_complete" class="form-check-input">
+
+  <br>
+  <br>
+
+  <button type="submit" class="btn btn-success">update</button>
+  <a class="btn btn-primary p-absolute" href="{% url 'todo:index' %}">취소</a>
+</form>
+
+{% endblock %}

@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+
+
+
+
+{% block content%}
+<div class="m-5 text-center mb-3">
+
+  <h1 class="h0 m-0">TEST</h1>
+  <div class="d-flex justify-content-end">
+    <a href="{% url 'todo:create' %}" class="btn btn-primary">입력하기</a>
+  </div>
+</div>
+
+<hr>
+<h2>목록</h2>
+<div class="my-3 row justify-content-between p-3 b-content rounded align-items-center">
+  <div class="col-9 row">
+    <div class="col-1 fw-bold">id</div>
+    <div class="col-1 fw-bold">priority</div>
+    <div class="col-7 fw-bold">content</div>
+    <div class="col-2 fw-bold">deadline</div>
+    <div class="col-1 fw-bold">check</div>
+
+  </div>
+  <div class="col-3">
+    <div class="fw-bold text-end">-----Edit-----</div>
+  </div>
+</div>
+{% for dbcontent in dbcontents %}
+{% if dbcontent.completed %}
+<div class="my-3 row justify-content-between bg-lightblue-completed p-3 b-content rounded align-items-center">
+  {% else %}
+  <div class="my-3 row justify-content-between bg-lightblue-continue p-3 b-content rounded align-items-center">
+    {% endif %}
+    <div class="col-9 row">
+      <div class="col-1">{{dbcontent.id}}</div>
+      <div class="col-1 fw-bold">{{dbcontent.priority}}</div>
+      <div class="col-7">{{dbcontent.content}}</div>
+      <div class="col-2">{{dbcontent.deadline}}</div>
+      <div class="col-1">{{dbcontent.completed}}</div>
+    </div>
+    <div class="col-3 d-flex justify-content-end">
+      <div>
+        <!-- Button trigger modal -->
+        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">
+          삭제
+        </button>
+
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">warning</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                해당 글을 삭제하시겠습니까?
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <a href="/todo/delete/{{dbcontent.id}}" class="btn-danger btn ">삭제</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <a href="/todo/update/{{dbcontent.id}}" class="btn-secondary btn ">수정</a>
+      </div>
+    </div>
+
+  </div>
+  <hr>
+  {% endfor %}
+
+  {% endblock%}

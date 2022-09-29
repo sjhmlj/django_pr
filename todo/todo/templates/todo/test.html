@@ -1,0 +1,116 @@
+{% extends 'base.html' %}
+
+
+{% block content%}
+<div class="m-5 text-center mb-3">
+
+  <h1 class="h0 m-0">TEST</h1>
+  <div class="d-flex justify-content-end">
+    <a href="{% url 'todo:create' %}" class="btn btn-primary">입력하기</a>
+  </div>
+</div>
+
+<hr>
+<h2>목록</h2>
+<div class="my-3 row justify-content-between p-3 b-content rounded align-items-center">
+  <div class="col-9 row">
+    <div class="col-1 fw-bold">id</div>
+    <div class="col-1 fw-bold">priority</div>
+    <div class="col-7 fw-bold">content</div>
+    <div class="col-2 fw-bold">deadline</div>
+    <div class="col-1 fw-bold">check</div>
+
+  </div>
+  <div class="col-3">
+    <div class="fw-bold text-end">-----Edit-----</div>
+  </div>
+</div>
+{% for dbcontent in dbcontents %}
+{% if dbcontent.completed %}
+<div class="my-3 row justify-content-between bg-light p-3 b-content rounded align-items-center">
+  {% else %}
+  <div class="my-3 row justify-content-between bg-bisque p-3 b-content rounded align-items-center">
+    {% endif %}
+    <div class="col-9 row">
+      <div class="col-1">{{dbcontent.id}}</div>
+      <div class="col-1 fw-bold">{{dbcontent.priority}}</div>
+      <div class="col-7">{{dbcontent.content}}</div>
+      <div class="col-2">{{dbcontent.deadline}}</div>
+      <div class="col-1">{{dbcontent.completed}}</div>
+    </div>
+    <div class="col-3 d-flex justify-content-end">
+      <div>
+        <a href="/todo/delete/{{dbcontent.id}}" class="btn-danger btn ">삭제</a>
+        <a href="/todo/update/{{dbcontent.id}}" class="btn-secondary btn ">수정</a>
+      </div>
+    </div>
+
+  </div>
+  <hr>
+  {% endfor %}
+
+
+  <!-- <table class="table">
+      <thead>
+        <tr>
+          <th scope="col" class="col-1">id</th>
+          <th scope="col" class="col-2">priority</th>
+          <th scope="col" class="col-4">content</th>
+          <th scope="col" class="col-3">deadline</th>
+          <th scope="col" class="col-2 text-center">
+            Edit
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+
+        {% for dbcontent in dbcontents %}
+        {% if dbcontent.completed %}
+        <div class="my-3 row justify-content-between bg-light p-3 b-content rounded align-items-center">
+          {% else %}
+          <div class="my-3 row justify-content-between bg-bisque p-3 b-content rounded align-items-center">
+            {% endif %}
+            <div class="col-8">
+              <div>content: {{dbcontent.content}}
+              </div>
+              <div>priority: {{dbcontent.priority}} // check: {{dbcontent.completed}} // deadline:
+                {{dbcontent.deadline}}
+              </div>
+            </div>
+            <div class="col-4 d-flex justify-content-end">
+              <div>
+
+                <a href="/todo/delete/{{dbcontent.id}}" class="btn-danger btn ">삭제</a>
+                <a href="/todo/update/{{dbcontent.id}}" class="btn-secondary btn ">수정</a>
+              </div>
+            </div>
+          </div>
+          <hr>
+          {% endfor %}
+
+          {% for dbcontent in dbcontents %}
+          {% if dbcontent.completed %}
+          <tr class="bg-light">
+            {% else %}
+          <tr class="bg-bisque">
+            {% endif %}
+            <th scope="row">{{dbcontent.id}}</th>
+            <td>{{dbcontent.priority}}</td>
+            <td>{{dbcontent.content}}</td>
+            <td>{{dbcontent.deadline}}</td>
+            <td>
+              <div class="d-flex justify-content-end">
+                <a href="/todo/delete/{{dbcontent.id}}" class="btn-danger btn mx-1">삭제</a>
+                <a href="/todo/update/{{dbcontent.id}}" class="btn-secondary btn mx-1">수정</a>
+              </div>
+            </td>
+          </tr>
+          {% endfor %}
+
+      </tbody>
+    </table> -->
+
+  <script>
+
+  </script>
+  {% endblock%}
