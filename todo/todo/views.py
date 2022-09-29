@@ -91,7 +91,7 @@ def update(request, pk):
     return render(request, "todo/update.html", context)
 
 
-def update2(request, pk):
+def updated(request, pk):
 
     fields = [
         "id",
@@ -119,6 +119,20 @@ def update2(request, pk):
     item.save()
     dbcontents = myTodo.objects.all().order_by("completed", "-priority")
 
+    context = {
+        "dbcontents": dbcontents,
+    }
+    return render(request, "todo/index.html", context)
+
+
+def update2(request, pk):
+    item = myTodo.objects.get(id=pk)
+    if item.completed == True:
+        item.completed = False
+    else:
+        item.completed = True
+    item.save()
+    dbcontents = myTodo.objects.all().order_by("completed", "-priority")
     context = {
         "dbcontents": dbcontents,
     }

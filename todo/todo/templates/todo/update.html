@@ -31,7 +31,12 @@
   <label for="deadline" class="form-label">deadline</label>
   <input type="date" class="form-control mb-3" id="deadline" name="deadline" value="{{ deadline }}">
   <label for="is_complete" class="form-check-label">is_complete</label>
+  {% if item.completed %}
+  <input type="checkbox" id="is_complete" name="is_complete" class="form-check-input" checked>
+  {% else %}
   <input type="checkbox" id="is_complete" name="is_complete" class="form-check-input">
+
+  {% endif %}
 
   <br>
   <br>

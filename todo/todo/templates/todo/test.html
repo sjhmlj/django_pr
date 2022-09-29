@@ -1,6 +1,8 @@
 {% extends 'base.html' %}
 
 
+
+
 {% block content%}
 <div class="m-5 text-center mb-3">
 
@@ -27,90 +29,54 @@
 </div>
 {% for dbcontent in dbcontents %}
 {% if dbcontent.completed %}
-<div class="my-3 row justify-content-between bg-light p-3 b-content rounded align-items-center">
-  {% else %}
-  <div class="my-3 row justify-content-between bg-bisque p-3 b-content rounded align-items-center">
-    {% endif %}
-    <div class="col-9 row">
-      <div class="col-1">{{dbcontent.id}}</div>
-      <div class="col-1 fw-bold">{{dbcontent.priority}}</div>
-      <div class="col-7">{{dbcontent.content}}</div>
-      <div class="col-2">{{dbcontent.deadline}}</div>
-      <div class="col-1">{{dbcontent.completed}}</div>
-    </div>
-    <div class="col-3 d-flex justify-content-end">
-      <div>
-        <a href="/todo/delete/{{dbcontent.id}}" class="btn-danger btn ">삭제</a>
-        <a href="/todo/update/{{dbcontent.id}}" class="btn-secondary btn ">수정</a>
+<div class="my-3 row justify-content-between bg-lightblue-completed p-3 b-content rounded align-items-center">
+  <div class="col-9 row line-through align-items-center">
+    {% else %}
+    <div class="my-3 row justify-content-between bg-lightblue-continue p-3 b-content rounded align-items-center">
+      <div class="col-9 row align-items-center">
+        {% endif %}
+        <div class="col-1">{{dbcontent.id}}</div>
+        <div class="col-1 fw-bold">{{dbcontent.priority}}</div>
+        <div class="col-7">{{dbcontent.content}}</div>
+        <div class="col-2">{{dbcontent.deadline}}</div>
+        <div class="col-1">
+          <a href="/todo/update2/{{dbcontent.id}}" class="btn-outline-secondary btn ">{{dbcontent.completed}}</a>
+
+        </div>
       </div>
-    </div>
+      <div class="col-3 d-flex justify-content-end">
+        <div>
+          <!-- Button trigger modal -->
+          <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">
+            삭제
+          </button>
 
-  </div>
-  <hr>
-  {% endfor %}
-
-
-  <!-- <table class="table">
-      <thead>
-        <tr>
-          <th scope="col" class="col-1">id</th>
-          <th scope="col" class="col-2">priority</th>
-          <th scope="col" class="col-4">content</th>
-          <th scope="col" class="col-3">deadline</th>
-          <th scope="col" class="col-2 text-center">
-            Edit
-          </th>
-        </tr>
-      </thead>
-      <tbody>
-
-        {% for dbcontent in dbcontents %}
-        {% if dbcontent.completed %}
-        <div class="my-3 row justify-content-between bg-light p-3 b-content rounded align-items-center">
-          {% else %}
-          <div class="my-3 row justify-content-between bg-bisque p-3 b-content rounded align-items-center">
-            {% endif %}
-            <div class="col-8">
-              <div>content: {{dbcontent.content}}
-              </div>
-              <div>priority: {{dbcontent.priority}} // check: {{dbcontent.completed}} // deadline:
-                {{dbcontent.deadline}}
-              </div>
-            </div>
-            <div class="col-4 d-flex justify-content-end">
-              <div>
-
-                <a href="/todo/delete/{{dbcontent.id}}" class="btn-danger btn ">삭제</a>
-                <a href="/todo/update/{{dbcontent.id}}" class="btn-secondary btn ">수정</a>
+          <!-- Modal -->
+          <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">warning</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  해당 글을 삭제하시겠습니까?
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                  <a href="/todo/delete/{{dbcontent.id}}" class="btn-danger btn ">삭제</a>
+                </div>
               </div>
             </div>
           </div>
-          <hr>
-          {% endfor %}
 
-          {% for dbcontent in dbcontents %}
-          {% if dbcontent.completed %}
-          <tr class="bg-light">
-            {% else %}
-          <tr class="bg-bisque">
-            {% endif %}
-            <th scope="row">{{dbcontent.id}}</th>
-            <td>{{dbcontent.priority}}</td>
-            <td>{{dbcontent.content}}</td>
-            <td>{{dbcontent.deadline}}</td>
-            <td>
-              <div class="d-flex justify-content-end">
-                <a href="/todo/delete/{{dbcontent.id}}" class="btn-danger btn mx-1">삭제</a>
-                <a href="/todo/update/{{dbcontent.id}}" class="btn-secondary btn mx-1">수정</a>
-              </div>
-            </td>
-          </tr>
-          {% endfor %}
+          <a href="/todo/update/{{dbcontent.id}}" class="btn-secondary btn ">수정</a>
+        </div>
+      </div>
 
-      </tbody>
-    </table> -->
+    </div>
+    <hr>
+    {% endfor %}
 
-  <script>
-
-  </script>
-  {% endblock%}
+    {% endblock%}
