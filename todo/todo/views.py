@@ -2,6 +2,7 @@ from django.shortcuts import render
 
 from config.settings import BASE_DIR
 from .models import myTodo
+from .models import myTodo_bt
 
 
 def index(request):
@@ -54,6 +55,16 @@ def create2(request):
                 deadline=deadline,
             )
             todo.save()
+
+            # 백업
+            todo_bt = myTodo_bt.objects.create(
+                content=content,
+                priority=priority,
+                completed=completed,
+                deadline=deadline,
+                id_2=todo.id,
+            )
+            todo_bt.save()
         dbcontents = myTodo.objects.all().order_by("completed", "-priority")
 
         context = {
@@ -93,14 +104,14 @@ def update(request, pk):
 
 def updated(request, pk):
 
-    fields = [
-        "id",
-        "content",
-        "priority",
-        "completed",
-        "created_At",
-        "deadline",
-    ]
+    # fields = [
+    #     "id",
+    #     "content",
+    #     "priority",
+    #     "completed",
+    #     "created_At",
+    #     "deadline",
+    # ]
 
     item = myTodo.objects.get(id=pk)
     content = request.GET.get("content")
@@ -117,6 +128,19 @@ def updated(request, pk):
     item.completed = completed
     item.deadline = deadline
     item.save()
+
+    # 백업
+    num_for_edit = myTodo_bt.objects.get(id_2=pk)
+    num_for_edit = num_for_edit.id
+    todo_bt = myTodo_bt.objects.create(
+        content=content,
+        priority=priority,
+        completed=completed,
+        deadline=deadline,
+        edit=(num_for_edit),
+    )
+    todo_bt.save()
+
     dbcontents = myTodo.objects.all().order_by("completed", "-priority")
 
     context = {
@@ -132,6 +156,14 @@ def update2(request, pk):
     else:
         item.completed = True
     item.save()
+
+    # 백업
+    try:
+        item_bt = myTodo_bt.objects.get(id_2=pk)
+        item_bt.completed = item.completed
+
+    except:
+        pass
     dbcontents = myTodo.objects.all().order_by("completed", "-priority")
     context = {
         "dbcontents": dbcontents,
@@ -142,8 +174,9 @@ def update2(request, pk):
 def test(request):
     items = myTodo.objects.all()
 
-    dbcontents = myTodo.objects.all().order_by("completed", "-priority")
+    # 테스트는 백업하지 않아도 될듯
 
+    dbcontents = myTodo.objects.all().order_by("completed", "-priority")
     context = {
         "dbcontents": dbcontents,
     }
@@ -186,3 +219,12 @@ def test(request):
 #     print(i.id, i.priority, i.completed, i.created_at)
 
 # dbcontents = myTodo.objects.all().order_by("-completed", "-priority")
+
+
+# myTodo_bt = myTodo_bt.objects.all()
+# for i in all:
+#     for j in myTodo_bt:
+#         if i.content == j.content:
+#             j.id_2 = i.id
+#             j.save()
+#             break
